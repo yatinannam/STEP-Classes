@@ -14,12 +14,13 @@ public class Account {
     private Integer pin;
 
     public Account(int accountNumber, String name, int age,
-                   double initialBalance, String accountType) {
+            double initialBalance, String accountType) {
         if (age < MIN_AGE) {
             throw new IllegalArgumentException("Age must be at least 18");
         }
 
-        if (accountType == null || (!accountType.equalsIgnoreCase("Savings") && !accountType.equalsIgnoreCase("Current"))) {
+        if (accountType == null
+                || (!accountType.equalsIgnoreCase("Savings") && !accountType.equalsIgnoreCase("Current"))) {
             throw new IllegalArgumentException("Account type must be Savings or Current");
         }
 
@@ -50,10 +51,10 @@ public class Account {
 
     public void withdraw(double amount, int pin)
             throws InvalidAmountException,
-                   InsufficientBalanceException,
-                   MinimumBalanceViolationException,
-                   InactiveAccountException,
-                   InvalidPinException {
+            InsufficientBalanceException,
+            MinimumBalanceViolationException,
+            InactiveAccountException,
+            InvalidPinException {
         validateActive();
 
         if (amount <= 0) {

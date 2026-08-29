@@ -23,10 +23,10 @@ public class CurrentAccount extends Account {
 
     public void withdrawWithOverdraft(double amount, int pin)
             throws InvalidAmountException,
-                   InsufficientBalanceException,
-                   MinimumBalanceViolationException,
-                   InactiveAccountException,
-                   InvalidPinException {
+            InsufficientBalanceException,
+            MinimumBalanceViolationException,
+            InactiveAccountException,
+            InvalidPinException {
         double availableBalance = getBalance() + overdraftLimit;
         if (amount <= 0) {
             throw new InvalidAmountException("Withdrawal amount must be greater than zero");
