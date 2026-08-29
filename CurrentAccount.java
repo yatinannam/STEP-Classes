@@ -21,19 +21,20 @@ public class CurrentAccount extends Account {
         }
     }
 
-    @Override
-    public boolean withdraw(double amount) {
-        if (amount <= 0) {
-            return false;
-        }
-
+    public void withdrawWithOverdraft(double amount, int pin)
+            throws InvalidAmountException,
+            InsufficientBalanceException,
+            MinimumBalanceViolationException,
+            InactiveAccountException,
+            InvalidPinException {
         double availableBalance = getBalance() + overdraftLimit;
-        if (amount > availableBalance) {
-            return false;
+        if (amount <= 0) {
+            throw new InvalidAmountException("Withdrawal amount must be greater than zero");
         }
-
-        setBalance(getBalance() - amount);
-        return true;
+        if (amount > availableBalance) {
+            throw new InsufficientBalanceException("Withdrawal exceeds available balance including overdraft limit");
+        }
+        withdraw(amount, pin);
     }
 
     public void displayCurrentAccount() {
