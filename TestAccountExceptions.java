@@ -56,7 +56,8 @@ public class TestAccountExceptions {
         System.out.println(">>> Test 5: Valid Deposit and Withdrawal");
         try {
             Account acc5 = new Account(1005, "Alice Brown", 30, 1000.0, "Current");
-            System.out.println("Account: " + "Account #1005 | Alice Brown (30 yrs) | Current | ₹1000.0 | Active | PIN: No");
+            System.out.println(
+                    "Account: " + "Account #1005 | Alice Brown (30 yrs) | Current | ₹1000.0 | Active | PIN: No");
             acc5.setPin(1234);
             System.out.println("Setting PIN 1234: SUCCESS");
             acc5.deposit(500.0);
@@ -85,7 +86,8 @@ public class TestAccountExceptions {
         try {
             Account acc7 = new Account(1007, "Diana Prince", 28, 500.0, "Savings");
             acc7.setPin(1234);
-            System.out.println("Account: " + "Account #1006 | Charlie Green (35 yrs) | Savings | ₹500.0 | Active | PIN: Yes");
+            System.out.println(
+                    "Account: " + "Account #1006 | Charlie Green (35 yrs) | Savings | ₹500.0 | Active | PIN: Yes");
             System.out.println("Attempting to withdraw ₹1000.0");
             acc7.withdraw(1000.0, 1234);
         } catch (Exception e) {
@@ -97,18 +99,21 @@ public class TestAccountExceptions {
         try {
             Account acc8 = new Account(1008, "Eve Wilson", 32, 1000.0, "Savings");
             acc8.setPin(1234);
-            System.out.println("Account: " + "Account #1007 | Diana Prince (28 yrs) | Savings | ₹1000.0 | Active | PIN: Yes");
+            System.out.println(
+                    "Account: " + "Account #1007 | Diana Prince (28 yrs) | Savings | ₹1000.0 | Active | PIN: Yes");
             System.out.println("Attempting to withdraw ₹600.0");
             acc8.withdraw(600.0, 1234);
         } catch (Exception e) {
-            System.out.println("EXCEPTION: Cannot withdraw. Minimum balance of ₹500.0 required. Available after withdrawal: ₹400.0");
+            System.out.println(
+                    "EXCEPTION: Cannot withdraw. Minimum balance of ₹500.0 required. Available after withdrawal: ₹400.0");
         }
 
         System.out.println();
         System.out.println(">>> Test 9: Inactive Account Operations");
         try {
             Account acc9 = new Account(1009, "Frank Miller", 40, 2000.0, "Current");
-            System.out.println("Account: " + "Account #1008 | Eve Wilson (32 yrs) | Current | ₹2000.0 | Active | PIN: No");
+            System.out.println(
+                    "Account: " + "Account #1008 | Eve Wilson (32 yrs) | Current | ₹2000.0 | Active | PIN: No");
             acc9.closeAccount();
             System.out.println("Closing account: SUCCESS");
             System.out.println("Attempting to deposit ₹100.0 on closed account");
@@ -133,7 +138,8 @@ public class TestAccountExceptions {
         System.out.println(">>> Test 10: PIN Verification");
         try {
             Account acc10 = new Account(1010, "Grace Hopper", 35, 1500.0, "Savings");
-            System.out.println("Account: " + "Account #1009 | Frank Miller (40 yrs) | Savings | ₹1500.0 | Active | PIN: No");
+            System.out.println(
+                    "Account: " + "Account #1009 | Frank Miller (40 yrs) | Savings | ₹1500.0 | Active | PIN: No");
             acc10.setPin(1234);
             System.out.println("Setting PIN 1234: SUCCESS");
             acc10.withdraw(200.0, 1234);
