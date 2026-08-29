@@ -57,7 +57,8 @@ public class TestAccountEnhanced {
         System.out.println("New balance: ₹" + acc5.getBalance());
         System.out.println("After withdrawal: ");
         printAccount(acc5);
-        System.out.println("Withdrawing ₹900.0 (would leave ₹-100): " + (acc5.withdraw(900.0) ? "SUCCESS" : "FAILED (Minimum balance violation)"));
+        System.out.println("Withdrawing ₹900.0 (would leave ₹-100): "
+                + (acc5.withdraw(900.0) ? "SUCCESS" : "FAILED (Minimum balance violation)"));
         System.out.println("Current balance: ₹" + acc5.getBalance());
 
         System.out.println();
@@ -68,7 +69,8 @@ public class TestAccountEnhanced {
         System.out.println("Closing account: " + (acc6.closeAccount() ? "SUCCESS" : "FAILED"));
         System.out.println("After close: ");
         printAccount(acc6);
-        System.out.println("Depositing ₹500.0 to closed account: " + (acc6.deposit(500.0) ? "SUCCESS" : "FAILED (Account inactive)"));
+        System.out.println("Depositing ₹500.0 to closed account: "
+                + (acc6.deposit(500.0) ? "SUCCESS" : "FAILED (Account inactive)"));
         System.out.println("Reopening account: " + (acc6.reopenAccount() ? "SUCCESS" : "FAILED"));
         System.out.println("After reopen: ");
         printAccount(acc6);
@@ -77,11 +79,14 @@ public class TestAccountEnhanced {
         System.out.println(">>> Test 7: PIN Protection");
         Account acc7 = new Account(1007, "Diana Prince", 28, 1500.0, "Savings");
         System.out.println("Setting PIN 1234: " + (acc7.setPin(1234) ? "SUCCESS" : "FAILED"));
-        System.out.println("Withdrawing ₹200.0 with correct PIN (1234): " + (acc7.withdraw(200.0, 1234) ? "SUCCESS" : "FAILED"));
+        System.out.println(
+                "Withdrawing ₹200.0 with correct PIN (1234): " + (acc7.withdraw(200.0, 1234) ? "SUCCESS" : "FAILED"));
         System.out.println("New balance: ₹" + acc7.getBalance());
-        System.out.println("Withdrawing ₹100.0 with incorrect PIN (9999): " + (acc7.withdraw(100.0, 9999) ? "SUCCESS" : "FAILED (Incorrect PIN)"));
+        System.out.println("Withdrawing ₹100.0 with incorrect PIN (9999): "
+                + (acc7.withdraw(100.0, 9999) ? "SUCCESS" : "FAILED (Incorrect PIN)"));
         Account acc8 = new Account(1008, "No PIN User", 28, 1500.0, "Savings");
-        System.out.println("Withdrawing ₹100.0 with PIN not set: " + (acc8.withdraw(100.0, 0000) ? "SUCCESS" : "FAILED (PIN not set)"));
+        System.out.println("Withdrawing ₹100.0 with PIN not set: "
+                + (acc8.withdraw(100.0, 0000) ? "SUCCESS" : "FAILED (PIN not set)"));
 
         System.out.println();
         System.out.println(">>> Test 8: All Accounts Summary");
