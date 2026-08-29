@@ -9,7 +9,7 @@ public class Account {
 
     // Constructor
     public Account(int accountNumber, String name, int age,
-                   double initialBalance, String accountType) {
+            double initialBalance, String accountType) {
 
         this.accountNumber = accountNumber;
         this.name = name;
@@ -66,30 +66,72 @@ public class Account {
 
     // Setters
     public void setName(String name) {
-        this.name = name;
+        if (name != null && !name.trim().isEmpty()) {
+            this.name = name.trim();
+        }
     }
 
     public void setAge(int age) {
-        this.age = age;
+        if (age > 0) {
+            this.age = age;
+        }
+    }
+
+    public void setBalance(double balance) {
+        if (balance >= 0) {
+            this.balance = balance;
+            if (this.balance == 0) {
+                this.status = "Inactive";
+            } else if ("Closed".equals(this.status)) {
+                this.status = "Closed";
+            } else {
+                this.status = "Active";
+            }
+        }
+    }
+
+    public void setAccountType(String accountType) {
+        if (accountType != null && !accountType.trim().isEmpty()) {
+            this.accountType = accountType.trim();
+        }
+    }
+
+    public void setStatus(String status) {
+        if (status != null && !status.trim().isEmpty()) {
+            this.status = status.trim();
+        }
+    }
+
+    public void closeAccount() {
+        this.status = "Closed";
+    }
+
+    public void reactivateAccount() {
+        if (this.balance > 0) {
+            this.status = "Active";
+        }
+    }
+
+    public void displayAccount() {
+        System.out.println("Account Number: " + accountNumber);
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+        System.out.println("Balance: " + balance);
+        System.out.println("Account Type: " + accountType);
+        System.out.println("Status: " + status);
     }
 
     // Main method for testing
     public static void main(String[] args) {
 
         Account account = new Account(
-            1001,
-            "Yatin Annam",
-            19,
-            5000.0,
-            "Savings"
-        );
+                1001,
+                "Yatin Annam",
+                19,
+                5000.0,
+                "Savings");
 
-        System.out.println("Account Number: " + account.getAccountNumber());
-        System.out.println("Name: " + account.getName());
-        System.out.println("Age: " + account.getAge());
-        System.out.println("Balance: " + account.getBalance());
-        System.out.println("Account Type: " + account.getAccountType());
-        System.out.println("Status: " + account.getStatus());
+        account.displayAccount();
 
         System.out.println();
 
@@ -101,5 +143,9 @@ public class Account {
 
         System.out.println("Withdraw 10000: " + account.withdraw(10000));
         System.out.println("Balance: " + account.getBalance());
+
+        account.setAccountType("Current");
+        account.setStatus("Active");
+        account.displayAccount();
     }
 }
