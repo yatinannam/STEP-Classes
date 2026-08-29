@@ -21,17 +21,9 @@ public class SavingsAccount extends Account {
         }
     }
 
-    public void applyInterest() {
+    public void applyInterest() throws InvalidAmountException, InactiveAccountException {
         double interest = getBalance() * interestRate / 100;
         deposit(interest);
-    }
-
-    @Override
-    public boolean withdraw(double amount) {
-        if (amount <= 0 || amount > getBalance()) {
-            return false;
-        }
-        return super.withdraw(amount);
     }
 
     public void displaySavingsAccount() {

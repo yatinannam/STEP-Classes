@@ -41,15 +41,31 @@ public class Bank {
         if (account == null) {
             return false;
         }
-        return account.deposit(amount);
+
+        try {
+            account.deposit(amount);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public boolean withdraw(int accountNumber, double amount) {
+        return withdraw(accountNumber, amount, 0);
+    }
+
+    public boolean withdraw(int accountNumber, double amount, int pin) {
         Account account = findAccount(accountNumber);
         if (account == null) {
             return false;
         }
-        return account.withdraw(amount);
+
+        try {
+            account.withdraw(amount, pin);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public boolean removeAccount(int accountNumber) {
@@ -92,24 +108,31 @@ public class Bank {
     }
 
     public static void main(String[] args) {
-        Bank bank = new Bank(5);
+        try {
+            Bank bank = new Bank(5);
 
-        Account account1 = new Account(1001, "Yatin Annam", 19, 5000.0, "Savings");
-        Account account2 = new Account(1002, "Riya Sharma", 20, 2500.0, "Current");
-        Account account3 = new Account(1003, "Aman Verma", 21, 7000.0, "Savings");
+            Account account1 = new Account(1001, "Yatin Annam", 19, 5000.0, "Savings");
+            account1.setPin(1111);
+            Account account2 = new Account(1002, "Riya Sharma", 20, 2500.0, "Current");
+            account2.setPin(2222);
+            Account account3 = new Account(1003, "Aman Verma", 21, 7000.0, "Savings");
+            account3.setPin(3333);
 
-        bank.addAccount(account1);
-        bank.addAccount(account2);
-        bank.addAccount(account3);
+            bank.addAccount(account1);
+            bank.addAccount(account2);
+            bank.addAccount(account3);
 
-        System.out.println("Total balance before transactions: " + bank.getTotalBalance());
-        System.out.println("Deposit to account 1002: " + bank.deposit(1002, 1500.0));
-        System.out.println("Withdraw from account 1001: " + bank.withdraw(1001, 1000.0));
+            System.out.println("Total balance before transactions: " + bank.getTotalBalance());
+            System.out.println("Deposit to account 1002: " + bank.deposit(1002, 1500.0));
+            System.out.println("Withdraw from account 1001: " + bank.withdraw(1001, 1000.0, 1111));
 
-        System.out.println("Balance of account 1002: " + bank.findAccount(1002).getBalance());
-        System.out.println("Balance of account 1001: " + bank.findAccount(1001).getBalance());
+            System.out.println("Balance of account 1002: " + bank.findAccount(1002).getBalance());
+            System.out.println("Balance of account 1001: " + bank.findAccount(1001).getBalance());
 
-        System.out.println("Remove account 1003: " + bank.removeAccount(1003));
-        bank.displayAllAccounts();
+            System.out.println("Remove account 1003: " + bank.removeAccount(1003));
+            bank.displayAllAccounts();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

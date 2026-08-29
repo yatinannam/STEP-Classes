@@ -17,16 +17,26 @@ public class BankingApp {
 
         System.out.println("=== Savings Account ===");
         System.out.println("Initial Balance: " + savings.getBalance());
-        savings.deposit(1000);
-        System.out.println("After deposit: " + savings.getBalance());
-        savings.applyInterest();
-        System.out.println("After interest: " + savings.getBalance());
+        try {
+            savings.deposit(1000);
+            System.out.println("After deposit: " + savings.getBalance());
+            savings.applyInterest();
+            System.out.println("After interest: " + savings.getBalance());
+        } catch (Exception e) {
+            System.out.println("Savings operation failed: " + e.getMessage());
+        }
         savings.displaySavingsAccount();
 
         System.out.println();
         System.out.println("=== Current Account ===");
         System.out.println("Initial Balance: " + current.getBalance());
-        System.out.println("Withdraw 4500: " + current.withdraw(4500));
+        current.setPin(1234);
+        try {
+            current.withdraw(4500, 1234);
+            System.out.println("Withdraw 4500: SUCCESS");
+        } catch (Exception e) {
+            System.out.println("Withdraw 4500: FAILED");
+        }
         System.out.println("Balance after withdrawal: " + current.getBalance());
         current.displayCurrentAccount();
     }
