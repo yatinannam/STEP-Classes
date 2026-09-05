@@ -24,47 +24,47 @@ public class TestAccountEnhanced {
                 try {
                         System.out.println();
                         System.out.println(">>> Test 1: Valid Account Creation");
-                        Account acc1 = new Account(1001, "John Doe", 25, 1000.0, "Savings");
+                        Account acc1 = new SavingsAccount(1001, "John Doe", 25, 1000.0);
                         printAccount(acc1);
 
                         System.out.println();
                         System.out.println(">>> Test 2: Invalid Age (under 18)");
                         System.out.println("Creating account with age 16");
                         try {
-                                new Account(1002, "Young Kid", 16, 500.0, "Savings");
+                                new SavingsAccount(1002, "Young Kid", 16, 500.0);
                         } catch (IllegalArgumentException e) {
                                 System.out.println(e.getMessage());
                         }
 
-                        Account acc2 = new Account(1002, "Young Kid", 18, 500.0, "Savings");
+                        Account acc2 = new SavingsAccount(1002, "Young Kid", 18, 500.0);
                         printAccount(acc2);
 
                         System.out.println();
                         System.out.println(">>> Test 3: Invalid Account Type");
                         System.out.println("Creating account with type \"Invalid\"");
                         try {
-                                new Account(1003, "Test User", 25, 500.0, "Invalid");
+                                new SavingsAccount(1003, "Test User", 25, 300.0);
                         } catch (IllegalArgumentException e) {
                                 System.out.println(e.getMessage());
                         }
 
-                        Account acc3 = new Account(1003, "Test User", 25, 500.0, "Savings");
+                        Account acc3 = new SavingsAccount(1003, "Test User", 25, 500.0);
                         printAccount(acc3);
 
                         System.out.println();
                         System.out.println(">>> Test 4: Minimum Balance Enforcement on Creation");
                         System.out.println("Creating Savings account with ₹300 (below minimum)");
                         try {
-                                new Account(1004, "Bob Wilson", 25, 300.0, "Savings");
+                                new SavingsAccount(1004, "Bob Wilson", 25, 300.0);
                         } catch (IllegalArgumentException e) {
                                 System.out.println(e.getMessage());
                         }
-                        Account acc4 = new Account(1004, "Bob Wilson", 25, 500.0, "Savings");
+                        Account acc4 = new SavingsAccount(1004, "Bob Wilson", 25, 500.0);
                         printAccount(acc4);
 
                         System.out.println();
                         System.out.println(">>> Test 5: Withdrawal with Minimum Balance");
-                        Account acc5 = new Account(1005, "Alice Brown", 30, 1000.0, "Current");
+                        Account acc5 = new CurrentAccount(1005, "Alice Brown", 30, 1000.0);
                         acc5.setPin(4321);
                         System.out.println("Initial: ");
                         printAccount(acc5);
@@ -88,7 +88,7 @@ public class TestAccountEnhanced {
 
                         System.out.println();
                         System.out.println(">>> Test 6: Account Status Management");
-                        Account acc6 = new Account(1006, "Charlie Green", 35, 2000.0, "Savings");
+                        Account acc6 = new SavingsAccount(1006, "Charlie Green", 35, 2000.0);
                         System.out.println("Initial: ");
                         printAccount(acc6);
                         try {
@@ -116,7 +116,7 @@ public class TestAccountEnhanced {
 
                         System.out.println();
                         System.out.println(">>> Test 7: PIN Protection");
-                        Account acc7 = new Account(1007, "Diana Prince", 28, 1500.0, "Savings");
+                        Account acc7 = new SavingsAccount(1007, "Diana Prince", 28, 1500.0);
                         try {
                                 acc7.setPin(1234);
                                 System.out.println("Setting PIN 1234: SUCCESS");
@@ -137,7 +137,7 @@ public class TestAccountEnhanced {
                                 System.out.println(
                                                 "Withdrawing ₹100.0 with incorrect PIN (9999): FAILED (Incorrect PIN)");
                         }
-                        Account acc8 = new Account(1008, "No PIN User", 28, 1500.0, "Savings");
+                        Account acc8 = new SavingsAccount(1008, "No PIN User", 28, 1500.0);
                         try {
                                 acc8.withdraw(100.0, 0000);
                                 System.out.println("Withdrawing ₹100.0 with PIN not set: SUCCESS");
