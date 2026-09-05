@@ -76,7 +76,7 @@ public class CurrentAccount extends Account {
             InactiveAccountException,
             InvalidPinException {
         double availableBalance = getBalance() - getMinimumBalance()
-            + getAvailableOverdraft();
+                + getAvailableOverdraft();
         validateAmount(amount);
         if (amount > availableBalance) {
             throw new InsufficientBalanceException("Withdrawal exceeds available balance including overdraft limit");
