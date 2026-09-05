@@ -111,11 +111,11 @@ public class Bank {
         try {
             Bank bank = new Bank(5);
 
-            Account account1 = new Account(1001, "Yatin Annam", 19, 5000.0, "Savings");
+            Account account1 = new SavingsAccount(1001, "Yatin Annam", 19, 5000.0);
             account1.setPin(1111);
-            Account account2 = new Account(1002, "Riya Sharma", 20, 2500.0, "Current");
+            Account account2 = new CurrentAccount(1002, "Riya Sharma", 20, 2500.0);
             account2.setPin(2222);
-            Account account3 = new Account(1003, "Aman Verma", 21, 7000.0, "Savings");
+            Account account3 = new SavingsAccount(1003, "Aman Verma", 21, 7000.0);
             account3.setPin(3333);
 
             bank.addAccount(account1);

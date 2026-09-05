@@ -1,6 +1,4 @@
-public class Account {
-    private static final double MIN_BALANCE_SAVINGS = 500.0;
-    private static final double MIN_BALANCE_CURRENT = 1000.0;
+public abstract class Account {
     private static final int MIN_AGE = 18;
     private static final int MIN_PIN = 1000;
     private static final int MAX_PIN = 9999;
@@ -9,31 +7,29 @@ public class Account {
     private String name;
     private int age;
     private double balance;
-    private String accountType;
     private String status;
     private Integer pin;
 
+    public abstract double getMinimumBalance();
+
+    public abstract String getAccountType();
+
     public Account(int accountNumber, String name, int age,
-            double initialBalance, String accountType) {
+            double initialBalance) {
         if (age < MIN_AGE) {
-            throw new IllegalArgumentException("Age must be at least 18");
+            throw new IllegalArgumentException("Customer must be at least 18 years old. Provided: " + age);
         }
 
-        if (accountType == null
-                || (!accountType.equalsIgnoreCase("Savings") && !accountType.equalsIgnoreCase("Current"))) {
-            throw new IllegalArgumentException("Account type must be Savings or Current");
-        }
-
-        double minimumBalance = getMinimumBalanceForType(accountType);
-        if (initialBalance < minimumBalance) {
-            throw new IllegalArgumentException("Initial balance cannot be below minimum required balance");
+        if (initialBalance < getMinimumBalance()) {
+            throw new IllegalArgumentException(getAccountType()
+                    + " account requires minimum balance of ₹" + getMinimumBalance()
+                    + ". Provided: ₹" + initialBalance);
         }
 
         this.accountNumber = accountNumber;
         this.name = name;
         this.age = age;
         this.balance = initialBalance;
-        this.accountType = accountType;
         this.status = "Active";
         this.pin = null;
     }
@@ -42,9 +38,7 @@ public class Account {
             throws InvalidAmountException, InactiveAccountException {
         validateActive();
 
-        if (amount <= 0) {
-            throw new InvalidAmountException("Deposit amount must be greater than zero");
-        }
+        validateAmount(amount);
 
         balance += amount;
     }
@@ -57,30 +51,21 @@ public class Account {
             InvalidPinException {
         validateActive();
 
-        if (amount <= 0) {
-            throw new InvalidAmountException("Withdrawal amount must be greater than zero");
-        }
-
-        if (this.pin == null) {
-            throw new InvalidPinException("PIN is not set");
-        }
-
-        if (!this.pin.equals(pin)) {
-            throw new InvalidPinException("Incorrect PIN");
-        }
+        validateAmount(amount);
+        validatePin(pin);
 
         if (amount > balance) {
             throw new InsufficientBalanceException("Insufficient balance for withdrawal");
         }
 
         double remainingBalance = balance - amount;
-        double minimumBalance = getMinimumBalanceForType(accountType);
+        double minimumBalance = getMinimumBalance();
         if (remainingBalance < minimumBalance) {
             throw new MinimumBalanceViolationException(
                     "Withdrawal would violate minimum balance requirement of " + minimumBalance);
         }
 
-        balance = remainingBalance;
+        setBalance(remainingBalance);
     }
 
     public void closeAccount() {
@@ -112,17 +97,29 @@ public class Account {
         return pin != null;
     }
 
-    private double getMinimumBalanceForType(String type) {
-        if (type.equalsIgnoreCase("Current")) {
-            return MIN_BALANCE_CURRENT;
-        }
-        return MIN_BALANCE_SAVINGS;
-    }
-
-    private void validateActive() throws InactiveAccountException {
+    protected void validateActive() throws InactiveAccountException {
         if (!"Active".equalsIgnoreCase(status)) {
             throw new InactiveAccountException("Account is inactive");
         }
+    }
+
+    protected void validatePin(int enteredPin) throws InvalidPinException {
+        if (pin == null) {
+            throw new InvalidPinException("PIN is not set");
+        }
+        if (!pin.equals(enteredPin)) {
+            throw new InvalidPinException("Incorrect PIN");
+        }
+    }
+
+    protected void validateAmount(double amount) throws InvalidAmountException {
+        if (amount <= 0) {
+            throw new InvalidAmountException("Amount must be greater than zero");
+        }
+    }
+
+    protected void setBalance(double balance) {
+        this.balance = balance;
     }
 
     public int getAccountNumber() {
@@ -141,10 +138,6 @@ public class Account {
         return balance;
     }
 
-    public String getAccountType() {
-        return accountType;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -155,7 +148,7 @@ public class Account {
 
     public static void main(String[] args) {
         try {
-            Account account = new Account(1001, "Yatin", 25, 1500.0, "Savings");
+            Account account = new SavingsAccount(1001, "Yatin", 25, 1500.0);
             account.setPin(1234);
             account.deposit(500.0);
             account.withdraw(200.0, 1234);

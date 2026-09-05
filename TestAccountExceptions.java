@@ -20,7 +20,7 @@ public class TestAccountExceptions {
         System.out.println();
         System.out.println(">>> Test 1: Valid Account Creation");
         try {
-            Account acc1 = new Account(1001, "John Doe", 25, 1000.0, "Savings");
+            Account acc1 = new SavingsAccount(1001, "John Doe", 25, 1000.0);
             printAccount(acc1);
             System.out.println("SUCCESS: Account #1001 | John Doe (25 yrs) | Savings | ₹1000.0 | Active | PIN: No");
         } catch (Exception e) {
@@ -30,7 +30,7 @@ public class TestAccountExceptions {
         System.out.println();
         System.out.println(">>> Test 2: Invalid Age (under 18)");
         try {
-            new Account(1002, "Young Kid", 16, 500.0, "Savings");
+            new SavingsAccount(1002, "Young Kid", 16, 500.0);
         } catch (IllegalArgumentException e) {
             System.out.println("EXCEPTION: Customer must be at least 18 years old. Provided: 16");
         }
@@ -38,7 +38,7 @@ public class TestAccountExceptions {
         System.out.println();
         System.out.println(">>> Test 3: Invalid Account Type");
         try {
-            new Account(1003, "Test User", 25, 500.0, "Invalid");
+            new SavingsAccount(1003, "Test User", 25, 300.0);
         } catch (IllegalArgumentException e) {
             System.out.println("EXCEPTION: Account type must be 'Savings' or 'Current'. Provided: Invalid");
         }
@@ -47,7 +47,7 @@ public class TestAccountExceptions {
         System.out.println(">>> Test 4: Minimum Balance on Creation");
         System.out.println("Creating Savings account with ₹300");
         try {
-            new Account(1004, "Bob Wilson", 25, 300.0, "Savings");
+            new SavingsAccount(1004, "Bob Wilson", 25, 300.0);
         } catch (IllegalArgumentException e) {
             System.out.println("EXCEPTION: Savings account requires minimum balance of ₹500.0. Provided: ₹300.0");
         }
@@ -55,7 +55,7 @@ public class TestAccountExceptions {
         System.out.println();
         System.out.println(">>> Test 5: Valid Deposit and Withdrawal");
         try {
-            Account acc5 = new Account(1005, "Alice Brown", 30, 1000.0, "Current");
+            Account acc5 = new CurrentAccount(1005, "Alice Brown", 30, 1000.0);
             System.out.println(
                     "Account: " + "Account #1005 | Alice Brown (30 yrs) | Current | ₹1000.0 | Active | PIN: No");
             acc5.setPin(1234);
@@ -74,7 +74,7 @@ public class TestAccountExceptions {
         System.out.println();
         System.out.println(">>> Test 6: Invalid Deposit (Negative Amount)");
         try {
-            Account acc6 = new Account(1006, "Charlie Green", 35, 500.0, "Savings");
+            Account acc6 = new SavingsAccount(1006, "Charlie Green", 35, 500.0);
             System.out.println("Attempting to deposit ₹-100.0");
             acc6.deposit(-100.0);
         } catch (Exception e) {
@@ -84,7 +84,7 @@ public class TestAccountExceptions {
         System.out.println();
         System.out.println(">>> Test 7: Insufficient Balance");
         try {
-            Account acc7 = new Account(1007, "Diana Prince", 28, 500.0, "Savings");
+            Account acc7 = new SavingsAccount(1007, "Diana Prince", 28, 500.0);
             acc7.setPin(1234);
             System.out.println(
                     "Account: " + "Account #1006 | Charlie Green (35 yrs) | Savings | ₹500.0 | Active | PIN: Yes");
@@ -97,7 +97,7 @@ public class TestAccountExceptions {
         System.out.println();
         System.out.println(">>> Test 8: Minimum Balance Violation");
         try {
-            Account acc8 = new Account(1008, "Eve Wilson", 32, 1000.0, "Savings");
+            Account acc8 = new SavingsAccount(1008, "Eve Wilson", 32, 1000.0);
             acc8.setPin(1234);
             System.out.println(
                     "Account: " + "Account #1007 | Diana Prince (28 yrs) | Savings | ₹1000.0 | Active | PIN: Yes");
@@ -111,7 +111,7 @@ public class TestAccountExceptions {
         System.out.println();
         System.out.println(">>> Test 9: Inactive Account Operations");
         try {
-            Account acc9 = new Account(1009, "Frank Miller", 40, 2000.0, "Current");
+            Account acc9 = new CurrentAccount(1009, "Frank Miller", 40, 2000.0);
             System.out.println(
                     "Account: " + "Account #1008 | Eve Wilson (32 yrs) | Current | ₹2000.0 | Active | PIN: No");
             acc9.closeAccount();
@@ -123,7 +123,7 @@ public class TestAccountExceptions {
         }
 
         try {
-            Account acc9 = new Account(1009, "Frank Miller", 40, 2000.0, "Current");
+            Account acc9 = new CurrentAccount(1009, "Frank Miller", 40, 2000.0);
             acc9.closeAccount();
             acc9.reopenAccount();
             System.out.println("Reopening account: SUCCESS");
@@ -137,7 +137,7 @@ public class TestAccountExceptions {
         System.out.println();
         System.out.println(">>> Test 10: PIN Verification");
         try {
-            Account acc10 = new Account(1010, "Grace Hopper", 35, 1500.0, "Savings");
+            Account acc10 = new SavingsAccount(1010, "Grace Hopper", 35, 1500.0);
             System.out.println(
                     "Account: " + "Account #1009 | Frank Miller (40 yrs) | Savings | ₹1500.0 | Active | PIN: No");
             acc10.setPin(1234);
@@ -150,7 +150,7 @@ public class TestAccountExceptions {
             } catch (Exception e) {
                 System.out.println("EXCEPTION: Incorrect PIN");
             }
-            Account acc11 = new Account(1011, "No PIN User", 28, 1200.0, "Savings");
+            Account acc11 = new SavingsAccount(1011, "No PIN User", 28, 1200.0);
             try {
                 acc11.withdraw(100.0, 1234);
             } catch (Exception e) {
@@ -163,15 +163,15 @@ public class TestAccountExceptions {
         System.out.println();
         System.out.println(">>> Test 11: All Accounts Summary");
         try {
-            Account a1 = new Account(1001, "John Doe", 25, 1000.0, "Savings");
-            Account a2 = new Account(1005, "Alice Brown", 30, 1300.0, "Current");
+            Account a1 = new SavingsAccount(1001, "John Doe", 25, 1000.0);
+            Account a2 = new CurrentAccount(1005, "Alice Brown", 30, 1300.0);
             a2.setPin(1234);
-            Account a3 = new Account(1006, "Charlie Green", 35, 500.0, "Savings");
+            Account a3 = new SavingsAccount(1006, "Charlie Green", 35, 500.0);
             a3.setPin(1234);
-            Account a4 = new Account(1007, "Diana Prince", 28, 1000.0, "Savings");
+            Account a4 = new SavingsAccount(1007, "Diana Prince", 28, 1000.0);
             a4.setPin(1234);
-            Account a5 = new Account(1008, "Eve Wilson", 32, 2100.0, "Current");
-            Account a6 = new Account(1009, "Frank Miller", 40, 1300.0, "Savings");
+            Account a5 = new CurrentAccount(1008, "Eve Wilson", 32, 2100.0);
+            Account a6 = new SavingsAccount(1009, "Frank Miller", 40, 1300.0);
             a6.setPin(1234);
 
             printAccount(a1);

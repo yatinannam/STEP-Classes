@@ -5,15 +5,13 @@ public class BankingApp {
                 1101,
                 "Yatin Annam",
                 19,
-                5000.0,
-                4.5);
+                5000.0);
 
         CurrentAccount current = new CurrentAccount(
                 1102,
                 "Aman Verma",
                 20,
-                3000.0,
-                1500.0);
+                3000.0);
 
         System.out.println("=== Savings Account ===");
         System.out.println("Initial Balance: " + savings.getBalance());

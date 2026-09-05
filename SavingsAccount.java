@@ -1,28 +1,37 @@
 public class SavingsAccount extends Account {
 
-    private double interestRate;
+    private static final double MINIMUM_BALANCE = 500.0;
+    private static final String ACCOUNT_TYPE = "Savings";
+    private static final double INTEREST_RATE = 4.0;
 
     public SavingsAccount(int accountNumber, String name, int age,
-            double initialBalance, double interestRate) {
-        super(accountNumber, name, age, initialBalance, "Savings");
-        if (interestRate < 0) {
-            throw new IllegalArgumentException("Interest rate cannot be negative");
+            double initialBalance) {
+        super(accountNumber, name, age, initialBalance);
+    }
+
+    @Override
+    public double getMinimumBalance() {
+        return MINIMUM_BALANCE;
+    }
+
+    @Override
+    public String getAccountType() {
+        return ACCOUNT_TYPE;
+    }
+
+    public double calculateInterest(int years) {
+        if (years < 0) {
+            throw new IllegalArgumentException("Years must be non-negative");
         }
-        this.interestRate = interestRate;
+        return getBalance() * (INTEREST_RATE / 100) * years;
     }
 
     public double getInterestRate() {
-        return interestRate;
-    }
-
-    public void setInterestRate(double interestRate) {
-        if (interestRate >= 0) {
-            this.interestRate = interestRate;
-        }
+        return INTEREST_RATE;
     }
 
     public void applyInterest() throws InvalidAmountException, InactiveAccountException {
-        double interest = getBalance() * interestRate / 100;
+        double interest = calculateInterest(1);
         deposit(interest);
     }
 
@@ -31,6 +40,6 @@ public class SavingsAccount extends Account {
         System.out.println("Account Number: " + getAccountNumber());
         System.out.println("Name: " + getName());
         System.out.println("Balance: " + getBalance());
-        System.out.println("Interest Rate: " + interestRate + "%");
+        System.out.println("Interest Rate: " + INTEREST_RATE + "%");
     }
 }
